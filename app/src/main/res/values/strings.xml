@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">手机影音</string>
+    <string name="start_str">正在启动...</string>
+    <string name="video_str">本地视频</string>
+    <string name="net_video_str">网络视频</string>
+    <string name="audio_str">本地音频</string>
+    <string name="net_audio_str">网络音频</string>
+</resources>

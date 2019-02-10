@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity">
+
+    <include layout="@layout/titlebar"></include>
+
+    <FrameLayout
+        android:id="@+id/fl_main_content"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </FrameLayout>
+   <RadioGroup
+       android:id="@+id/rg_bottom_tag"
+       android:padding="3dp"
+       android:background="#220000"
+       android:orientation="horizontal"
+       android:gravity="center_vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <RadioButton
+           android:id="@+id/rb_video"
+           android:text="@string/video_str"
+           android:drawableTop="@drawable/rb_video_drawable_selector"
+           style="@style/bottom_tag_style" />
+       <RadioButton
+           android:id="@+id/rb_audio"
+           android:text="@string/audio_str"
+           android:drawableTop="@drawable/rb_audio_drawable_selector"
+           style="@style/bottom_tag_style" />
+       <RadioButton
+           android:id="@+id/rb_net_video"
+           android:text="@string/net_video_str"
+           android:drawableTop="@drawable/rb_net_video_drawable_selector"
+           style="@style/bottom_tag_style" />
+       <RadioButton
+           android:id="@+id/rb_netaudio"
+           android:text="@string/net_audio_str"
+           android:drawableTop="@drawable/rb_netaudio_drawable_selector"
+           style="@style/bottom_tag_style" />
+    </RadioGroup>
+</LinearLayout>

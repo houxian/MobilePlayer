@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.android.mobileplayer.view.TitleBar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:background="#220000"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+    <ImageView
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_topbanner_logo"/>
+    <TextView
+        android:layout_weight="1"
+        android:text="全网搜索"
+        android:textSize="14sp"
+        android:clickable="true"
+        android:id="@+id/tv_search"
+        android:layout_marginLeft="5dp"
+        android:drawableLeft="@drawable/tv_serch_drawable_selector"
+        android:background="@drawable/tv_serch_bg_selector"
+        android:textColor="@drawable/tv_serch_textcolor_selector"
+        android:drawablePadding="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/rl_game"
+        android:layout_marginLeft="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_topbanner_game"/>
+        <ImageView
+            android:layout_alignRight="@+id/tv_game"
+            android:layout_width="6dp"
+            android:background="@drawable/dot"
+            android:layout_height="6dp" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_record"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_topbanner_record"/>
+
+</com.android.mobileplayer.view.TitleBar>
