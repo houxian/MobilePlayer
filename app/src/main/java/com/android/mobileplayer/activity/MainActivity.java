@@ -1,6 +1,9 @@
 package com.android.mobileplayer.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +15,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
+import android.widget.Toast;
+
 import com.android.mobileplayer.R;
 import com.android.mobileplayer.base.BasePager;
 import com.android.mobileplayer.fragment.ReplaceFragment;
@@ -19,7 +24,10 @@ import com.android.mobileplayer.pager.AudioPager;
 import com.android.mobileplayer.pager.NetAudioPager;
 import com.android.mobileplayer.pager.NetVideoPager;
 import com.android.mobileplayer.pager.VideoPager;
+
+
 import java.util.ArrayList;
+import static android.os.Build.VERSION.SDK_INT;
 
 public class MainActivity extends FragmentActivity {
 
@@ -28,6 +36,8 @@ public class MainActivity extends FragmentActivity {
 
     private ArrayList<BasePager> basePagers;
     private int nposition =0;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static boolean mPermissionReqProcessed = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,17 +45,11 @@ public class MainActivity extends FragmentActivity {
 
         fl_main_content = (FrameLayout) findViewById(R.id.fl_main_content);
         radioGroup = (RadioGroup)findViewById(R.id.rg_bottom_tag);
-
-
-        basePagers = new ArrayList<>();
-        basePagers.add(new VideoPager(this));
-        basePagers.add(new AudioPager(this));
-        basePagers.add(new NetAudioPager(this));
-        basePagers.add(new NetVideoPager(this));
-        //设置 radioGroup 的checked 监听
-        radioGroup.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
-        radioGroup.check(R.id.rb_video);
-        applypermission();
+        if(SDK_INT>23){
+            applypermission();
+        }else {
+            initView();
+        }
 
     }
 
@@ -68,7 +72,7 @@ public class MainActivity extends FragmentActivity {
                 default:
                     nposition = 0;
             }
-           setFragment();
+            setFragment();
 
         }
     }
@@ -96,16 +100,49 @@ public class MainActivity extends FragmentActivity {
         }
         return  basePager;
     }
+
+    private void initView(){
+
+        basePagers = new ArrayList<>();
+        basePagers.add(new VideoPager(this));
+        basePagers.add(new AudioPager(this));
+        basePagers.add(new NetAudioPager(this));
+        basePagers.add(new NetVideoPager(this));
+        //设置 radioGroup 的checked 监听
+        radioGroup.setOnCheckedChangeListener(new MyOnCheckedChangeListener());
+        radioGroup.check(R.id.rb_video);
+    }
+    /**
+     * 获取权限
+     */
     public void applypermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            //检查是否已经给了权限
-            int checkpermission = ContextCompat.checkSelfPermission(getApplicationContext(),
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (checkpermission != PackageManager.PERMISSION_GRANTED) {//没有给权限
-                Log.e("permission", "动态申请");
-                //参数分别是当前活动，权限字符串数组，requestcode
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }
+
+        if (getApplicationContext()
+                .checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            this.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_EXTERNAL_STORAGE);
+            mPermissionReqProcessed = false;
+        } else {
+            mPermissionReqProcessed = true;
+            initView();
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (requestCode == REQUEST_EXTERNAL_STORAGE) {
+            // If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                mPermissionReqProcessed = true;
+                initView();
+            } else {
+                finish();
+            }
+        }
+
+    }
+
 }
