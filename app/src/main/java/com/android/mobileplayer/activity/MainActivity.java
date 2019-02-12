@@ -1,22 +1,13 @@
 package com.android.mobileplayer.activity;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
-import android.widget.Toast;
-
 import com.android.mobileplayer.R;
 import com.android.mobileplayer.base.BasePager;
 import com.android.mobileplayer.fragment.ReplaceFragment;

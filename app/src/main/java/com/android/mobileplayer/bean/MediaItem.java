@@ -1,9 +1,11 @@
 package com.android.mobileplayer.bean;
 
+import java.io.Serializable;
+
 /**
  * 代表
  */
-public class MediaItem {
+public class MediaItem implements Serializable {
 
     private  String name; //视频名称
     private long duration; //视频总长

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -73,17 +75,19 @@ public class VideoPager extends BasePager {
         return view;
     }
 
-     class MyInteClickListener implements AdapterView.OnItemClickListener{
+    class MyInteClickListener implements AdapterView.OnItemClickListener{
 
-         @Override
-         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-             MediaItem item = mediaItemArrayList.get(position);
-             Intent intent = new Intent(context, SystemVideoActivity.class);
-             intent.setDataAndType(Uri.parse(item.getData()),"video/*");
-             context.startActivity(intent);
-         }
-     }
+            Intent intent = new Intent(context, SystemVideoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("videolist",mediaItemArrayList);
+            intent.putExtras(bundle);
+            intent.putExtra("videoid",position);
+            context.startActivity(intent);
+        }
+    }
 
     @Override
     public void initData() {
